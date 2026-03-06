@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Registration</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #070b12;
-            --grid-color: rgba(0, 240, 255, 0.05);
-            --card-bg: rgba(15, 22, 33, 0.75);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary-color: #00f0ff;
-            --primary-glow: rgba(0, 240, 255, 0.5);
-            --border-color: #1e293b;
-            --input-bg: rgba(10, 15, 24, 0.8);
+            --bg-base: #f4f7fb; 
+            --grid-main: rgba(0, 85, 255, 0.05); 
+            --grid-sub: rgba(0, 85, 255, 0.02);
+            --card-bg: rgba(255, 255, 255, 0.85); 
+            --text-main: #0f172a; 
+            --text-muted: #64748b;
+            --primary-color: #0055ff; 
+            --primary-glow: rgba(0, 85, 255, 0.2);
+            --accent-color: #00e676; /* Live status green */
+            --border-color: #cbd5e1;
+            --input-bg: #f8fafc;
+            --input-focus-bg: #ffffff;
         }
 
         * {
@@ -27,11 +30,14 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
-            /* Techy Grid Background */
+            /* Advanced dual-layer blueprint grid */
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 30px 30px;
+                linear-gradient(var(--grid-main) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-main) 1px, transparent 1px),
+                linear-gradient(var(--grid-sub) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-sub) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -49,101 +55,153 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0; /* Keeps it behind the form */
-            pointer-events: none; /* Allows user to click through the images */
+            z-index: 0;
+            pointer-events: none;
             overflow: hidden;
         }
 
         .flyer {
             position: absolute;
-            width: 200px; /* Adjust size of flyers here */
+            width: 220px;
             height: auto;
-            border-radius: 8px;
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-            opacity: 0.4; /* Slightly faded so form is readable */
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(0, 85, 255, 0.12), 
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            opacity: 0.95; 
             animation: float 12s ease-in-out infinite alternate;
+            /* Added a subtle backdrop filter to the flyers themselves */
+            backdrop-filter: blur(4px); 
         }
 
-        /* Positioning and custom animation timing for each flyer */
-        .flyer-1 { top: 10%; left: 8%; animation-duration: 14s; }
-        .flyer-2 { top: 15%; right: 8%; animation-duration: 16s; animation-direction: alternate-reverse; }
-        .flyer-3 { bottom: 10%; left: 12%; animation-duration: 18s; animation-direction: alternate-reverse; }
-        .flyer-4 { bottom: 15%; right: 12%; animation-duration: 15s; }
+        .flyer-1 { top: 8%; left: 5%; animation-duration: 14s; }
+        .flyer-2 { top: 12%; right: 5%; animation-duration: 16s; animation-direction: alternate-reverse; }
+        .flyer-3 { bottom: 8%; left: 8%; animation-duration: 18s; animation-direction: alternate-reverse; }
+        .flyer-4 { bottom: 12%; right: 8%; animation-duration: 15s; }
 
         @keyframes float {
-            0% { transform: translateY(0px) rotate(-5deg); }
-            50% { transform: translateY(-20px) rotate(0deg); }
-            100% { transform: translateY(0px) rotate(5deg); }
+            0% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(-2deg); }
         }
 
         /* --- Form CSS --- */
         .form-container {
             position: relative;
-            z-index: 10; /* Keeps form above the floating flyers */
+            z-index: 10;
             background-color: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 40px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 240, 255, 0.15);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
-                        inset 0 0 20px rgba(0, 240, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 45px 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05), 
+                        0 4px 10px rgba(0, 85, 255, 0.05),
+                        inset 0 1px 0 rgba(255, 255, 255, 1);
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
+        }
+
+        /* Live Status Indicator & Header */
+        .header-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
         }
 
         .form-container h2 {
-            margin-bottom: 30px;
             color: var(--primary-color);
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             text-transform: uppercase;
-            text-align: center;
-            text-shadow: 0 0 15px var(--primary-glow);
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .form-group { margin-bottom: 22px; }
+        .form-container h2 span { color: var(--text-main); }
+
+        .form-group { margin-bottom: 24px; position: relative; }
 
         label {
-            display: block;
+            display: flex;
+            align-items: center;
             margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--primary-color);
+            font-weight: 600;
+            color: var(--text-main);
             font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* Techy "//" marker before labels */
+        label::before {
+            content: "// ";
+            color: var(--primary-color);
+            margin-right: 6px;
+            opacity: 0.7;
+        }
+
+        label .helper-text {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-left: auto; /* Pushes helper text to the right */
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Code-editor style inputs */
         input[type="text"], input[type="email"], input[type="tel"], textarea {
             width: 100%;
-            padding: 14px;
+            padding: 14px 16px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-left: 3px solid transparent; /* Prep for focus effect */
+            border-radius: 8px;
             color: var(--text-main);
             font-size: 14px;
             font-family: 'JetBrains Mono', monospace;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             outline: none;
         }
 
         textarea {
             resize: vertical;
-            height: 90px;
+            height: 100px;
         }
 
-        input::placeholder, textarea::placeholder { color: #475569; }
+        input::placeholder, textarea::placeholder { 
+            color: #94a3b8; 
+            font-family: 'Inter', sans-serif; /* Keep placeholder easy to read */
+        }
 
+        /* Active line highlight on focus */
         input:focus, textarea:focus {
+            background-color: var(--input-focus-bg);
             border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            background-color: #0f1724;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transform: translateY(-1px);
         }
 
+        /* --- Interactive Checkboxes --- */
         .checkbox-group > div {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -154,58 +212,109 @@
         .checkbox-group label {
             display: flex;
             align-items: center;
-            text-transform: none;
-            letter-spacing: normal;
             color: var(--text-main);
             font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             background-color: var(--input-bg);
-            padding: 12px;
-            border-radius: 6px;
+            padding: 14px 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 0;
         }
+
+        .checkbox-group label::before { display: none; /* Hide the "//" for checkboxes */ }
 
         .checkbox-group label:hover {
             border-color: var(--primary-color);
-            background-color: rgba(0, 240, 255, 0.05);
+            background-color: #ffffff;
+        }
+
+        /* Modern CSS :has() selector - highlights the WHOLE box when checked */
+        .checkbox-group label:has(input[type="checkbox"]:checked) {
+            background-color: rgba(0, 85, 255, 0.05);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color), 0 4px 12px var(--primary-glow);
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         input[type="checkbox"] {
-            margin-right: 10px;
-            width: 16px;
-            height: 16px;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
             accent-color: var(--primary-color);
             cursor: pointer;
+            flex-shrink: 0;
         }
 
+        /* Terminal Execution Button */
         button {
-            background: rgba(0, 240, 255, 0.1);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 16px 20px;
-            border-radius: 6px;
+            background: var(--text-main);
+            color: #ffffff;
+            border: none;
+            padding: 18px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             font-family: 'JetBrains Mono', monospace;
             width: 100%;
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin-top: 10px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button::before {
+            content: ">";
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 18px;
+            transition: transform 0.3s ease;
         }
 
         button:hover {
             background: var(--primary-color);
-            color: var(--bg-base);
-            box-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 8px 25px var(--primary-glow);
             transform: translateY(-2px);
         }
 
+        button:hover::before {
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
         button:active { transform: translateY(1px); }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            body { padding: 20px 15px; }
+            .form-container { padding: 35px 25px; }
+            .form-container h2 { font-size: 18px; }
+            .checkbox-group > div { grid-template-columns: 1fr; }
+            
+            label .helper-text { 
+                display: block; 
+                margin-left: 0; 
+                margin-top: 4px;
+                width: 100%;
+            }
+
+            .flyer { width: 130px; opacity: 0.7; }
+            .flyer-1 { top: -20px; left: -20px; }
+            .flyer-2 { top: 20%; right: -30px; }
+            .flyer-3 { bottom: 20%; left: -30px; }
+            .flyer-4 { bottom: -20px; right: -20px; }
+        }
     </style>
 </head>
 <body>
@@ -218,7 +327,10 @@
 </div>
 
 <div class="form-container">
-    <h2>Team Registration For Management Day</h2>
+    <div class="header-wrapper">
+        <div class="status-dot"></div>
+        <h2>12th March <span>// Management_DAY</span></h2>
+    </div>
     
     <form action="https://formspree.io/f/xzdjpnwg" method="POST">
         
@@ -228,28 +340,29 @@
         </div>
 
         <div class="form-group">
-            <label for="name">Full Name (Captain/Lead)</label>
+            <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Enter captain's name" required>
         </div>
 
         <div class="form-group">
-            <label for="enrolment">Enrolment Number</label>
+            <label for="enrolment">Enrolment No.</label>
             <input type="text" id="enrolment" name="enrolment" placeholder="e.g. EN-123456" required>
         </div>
 
         <div class="form-group">
-            <label for="contact">Contact Number</label>
+            <label for="contact">Contact No.</label>
             <input type="tel" id="contact" name="contact" placeholder="e.g. +91 9876543210" required>
         </div>
 
         <div class="form-group">
-            <label for="team_name">Team Name</label>
-            <input type="text" id="team_name" name="team_name" placeholder="Enter team handle" required>
+            <label for="team_name">Team Handle</label>
+            <input type="text" id="team_name" name="team_name" placeholder="Enter team name" required>
         </div>
 
         <div class="form-group checkbox-group">
-            <label>Games Selection (Max 4) ----->
-                You can Select Multiple Games
+            <label style="flex-wrap: wrap;">
+                Target Games
+                <span class="helper-text">[Select up to 4 parameters]</span>
             </label>
             <div>
                 <label><input type="checkbox" name="games[]" value="UI/UX Boardroom">UI/UX Boardroom</label>
@@ -265,8 +378,8 @@
         </div>
 
         <div class="form-group">
-            <label for="message">Additional Intel / Message</label>
-            <textarea id="message" name="message" placeholder="Any special requests or notes?"></textarea>
+            <label for="message">Additional Intel</label>
+            <textarea id="message" name="message" placeholder="Input specific requests or notes..."></textarea>
         </div>
 
         <button type="submit">Execute_Registration</button>
